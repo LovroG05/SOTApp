@@ -1,16 +1,26 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:logger/logger.dart'; // Consider using a logging library for debugging
+import 'package:logger/logger.dart';
+import 'package:sotapp/local_notification_utils.dart'; // Consider using a logging library for debugging
 
-class FirebaseUtil {
-  final _firebaseMessaging = FirebaseMessaging.instance;
-  final Logger logger = Logger(); // Optional: For logging
 
+final Logger logger = Logger();
+
+@pragma('vm:entry-point')
   Future<void> handleBackgroundMessage(RemoteMessage message) async {
-    logger.d(message.notification?.title ?? "No title available");
-    logger.d(message.notification?.body ?? "No body available");
-    logger.d(message.data);
+    LocalNotificationService().showNotification(
+      title: message.data["callsign"] + " - " + message.data["association"] + "/" + message.data["summit"], 
+      description: message.data["frequency"]
+    );
+
+
     // Process the notification data here (e.g., display a local notification)
   }
+class FirebaseUtil {
+  final _firebaseMessaging = FirebaseMessaging.instance;
+   // Optional: For logging
+
+  
+
 
   Future<void> initNotification() async {
     // Request notification permissions
@@ -21,6 +31,9 @@ class FirebaseUtil {
     logger.d(fCMToken);
 
     // Listen for background messages
+    print("WTF IS THIS");
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
+
+    
   }
 }

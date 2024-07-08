@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sotapp/firebase_options.dart';
 import 'package:sotapp/firebase_utils.dart';
+import 'package:sotapp/local_notification_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,6 +10,8 @@ void main() async {
 
   // Initialize notification handling
   await FirebaseUtil().initNotification();
+
+  await LocalNotificationService.init();
   runApp(const MyApp());
 }
 
