@@ -1,6 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:logger/logger.dart';
-import 'package:sotapp/local_notification_utils.dart'; // Consider using a logging library for debugging
+import 'package:sotapp/utils/local_notification.utils.dart'; // Consider using a logging library for debugging
 
 
 final Logger logger = Logger();

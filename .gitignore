@@ -41,3 +41,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+sotawatch_sender/serviceAccountKey.json
+lib/firebase_options.dart
+firebase.json
+android/app/google-services.json
