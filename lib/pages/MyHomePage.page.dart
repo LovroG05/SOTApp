@@ -13,12 +13,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
 
   static final List<Widget> _pages = [
     logs(),
     spots(),
-    settings()
+    const SettingsPage()
   ];
 
   void _onItemTapped(int index) {
