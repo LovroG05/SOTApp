@@ -21,6 +21,7 @@ class _SettingsPageState extends State<SettingsPage> {
   bool other = false;
 
   List<String> bands = [];
+  List<String> associations = [];
 
   Future<Settings> getSettings() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -43,6 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
     other_modes ??= false;
 
     bands ??= [];
+    associations ??= [];
 
 
 
@@ -92,6 +94,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 other = dat.other_modes!;
 
                 bands = dat.bands!;
+                associations = dat.associations!;
+
 
                 return SingleChildScrollView(
                   child: Padding(
@@ -561,12 +565,84 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ),
 
-                              TextField(
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Enter associations in a CSV format',
-                                ),
-                                controller: associationsController,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        hintText: 'Enter association',
+                                      ),
+                                      controller: associationsController,
+                                    ),
+                                  ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: TextButton(
+                                      onPressed: () async {
+                                        String assocs = associationsController.text;
+
+                                        if (assocs != "") {
+                                          setState(() {
+                                            associations.add(assocs);
+                                          });
+                                          final SharedPreferences prefs = await SharedPreferences.getInstance();
+                                          prefs.setStringList("associations", associations);
+                                        }
+                                        
+                                        
+                                      }, 
+                                      child: const Icon(Icons.add),
+                                    ),
+                                  )
+                                ],
+                              ),
+
+                              ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: associations.length,
+                                itemBuilder: (context, index) {
+                                  return Dismissible(
+                                    key: UniqueKey(),
+                                    direction: DismissDirection.endToStart,
+
+                                    onDismissed: (_) async {
+                                      setState(() {
+                                        associations.removeAt(index);
+                                      });
+
+                                      final SharedPreferences prefs = await SharedPreferences.getInstance();
+                                      prefs.setStringList("associations", associations);
+                                    },
+
+                                    background: Container(
+                                      color: Colors.red,
+                                      margin: const EdgeInsets.symmetric(horizontal: 15),
+                                      alignment: Alignment.centerRight,
+                                      child: const Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Card(
+                                        color: Colors.pink[200],
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(5.0),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Center(
+                                            child: Text(associations[index]),
+                                          )
+                                        ),
+                                      )
+                                    )
+                                  );
+                                }
                               ),
                             ],
                           ),
