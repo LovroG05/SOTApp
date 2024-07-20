@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sotapp/models/Settings.model.dart';
+import 'package:sotapp/utils/settings.utils.dart';
 
 
 class SettingsPage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
   List<String> bands = [];
   List<String> associations = [];
 
-  Future<Settings> getSettings() async {
+  /* Future<Settings> getSettings() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? associations = prefs.getStringList("associations");
     List<String>? bands = prefs.getStringList("bands");
@@ -59,7 +60,7 @@ class _SettingsPageState extends State<SettingsPage> {
       dv: dv,
       other_modes: other_modes
     );
-  }
+  } */
 
   final TextEditingController associationsController = TextEditingController();
 
