@@ -34,7 +34,7 @@ last_time_reported = None
 while True:
     # Notifications
     for i in get_last_h_spots():
-        t = datetime.strptime(i["timeStamp"], "%Y-%m-%dT%H:%M:%S.%f")
+        t = datetime.strptime(i["timeStamp"].split(".")[0], "%Y-%m-%dT%H:%M:%S")
         if last_time_reported == None or max(t, last_time_reported) == last_time_reported:
             last_time_reported = t
             send_push_notification(messaging.MulticastMessage(
